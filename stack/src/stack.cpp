@@ -1,25 +1,73 @@
-// stack.cpp
-
-#include <cstdlib>
 #include "stack.h"
 
-Stack::Stack() : Stack(defaultSize) {}
+#include <iostream>
+#include <cassert>
 
-Stack::Stack(int size) {
-    data = new int[size];
-    top = 0;
+Stack::Stack() : Stack(defaultCapacity) {}
+
+Stack::Stack(int capacity)
+    : capacity(capacity)
+    , data(new int[capacity])
+    , top(0) {}
+
+Stack::Stack(const Stack & orig) : data(nullptr) {
+    initFrom(orig);
 }
 
 Stack::~Stack() {
+    free();
+}
+
+void Stack::free() {
     delete[] data;
+    data = nullptr;
+}
+
+Stack & Stack::operator=(Stack const & that) {
+    if (this != &that) {
+        free();
+        initFrom(that);
+    }
+    return *this;
+}
+
+void Stack::initFrom(Stack const & that) {
+    assert(data == nullptr);
+
+    top = that.top;
+    capacity = that.capacity;
+    data = new int[capacity];
+    for (int i = 0; i < capacity; ++i) {
+        this->data[i] = that.data[i];
+    }
+}
+
+void Stack::expand() {
+    int newCapacity = capacity * growthFactor;
+    int * newData = new int[newCapacity];
+    for (int i = 0; i < top; ++i) {
+        newData[i] = data[i];
+    }
+    delete[] data;
+    data = newData;
+    capacity = newCapacity;
 }
 
 void Stack::push(int val) {
-    data[top] = val;
-    top++;
+    if (top == capacity) {
+        expand();
+    }
+    data[top++] = val;
 }
 
 int Stack::pop() {
-    if (top == 0) exit(1);
-    return data[--top];
+    int topValue = peek();
+    top -= 1;
+    return topValue;
 }
+
+int Stack::peek() const {
+    assert(top > 0);
+    return data[top];
+}
+

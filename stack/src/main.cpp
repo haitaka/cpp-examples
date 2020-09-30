@@ -1,6 +1,17 @@
 #include <iostream>
 #include "stack.h"
 
+Stack replaceSomeValues(Stack & s) {
+    s.pop();
+    s.pop();
+    s.pop();
+
+    s.push(16);
+    s.push(23);
+    s.push(42);
+    return s;
+}
+
 int main() {
     Stack s(23);
 
