@@ -22,7 +22,7 @@ public:
 private:
     void initFrom(Stack const & that);
     void free();
-    void expand();
+    void grow();
 
     int capacity;
     int top;

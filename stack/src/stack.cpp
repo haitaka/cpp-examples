@@ -42,7 +42,7 @@ void Stack::initFrom(Stack const & that) {
     }
 }
 
-void Stack::expand() {
+void Stack::grow() {
     int newCapacity = capacity * growthFactor;
     int * newData = new int[newCapacity];
     for (int i = 0; i < top; ++i) {
@@ -55,7 +55,7 @@ void Stack::expand() {
 
 void Stack::push(int val) {
     if (top == capacity) {
-        expand();
+        grow();
     }
     data[top++] = val;
 }
