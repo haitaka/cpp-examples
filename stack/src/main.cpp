@@ -1,27 +1,33 @@
 #include <iostream>
 #include "stack.h"
+#include "list-stack.h"
+#include "array-stack.h"
 
-Stack replaceSomeValues(Stack & s) {
-    s.pop();
-    s.pop();
-    s.pop();
+void drainAndPrint(Stack * stack) {
+    // same as
+    // stack->drainAndPrint();
 
-    s.push(16);
-    s.push(23);
-    s.push(42);
-    return s;
+    while(!stack->isEmpty()) {
+        std::cout << stack->pop() << std::endl;
+    }
 }
 
 int main() {
-    Stack s(23);
+    ListStack ls;
+    ls.push(4);
+    ls.push(8);
+    ls.push(15);
+    std::cout << "ListStack:" << std::endl;
+    drainAndPrint(&ls);
+    std::cout << std::endl;
 
-    s.push(4);
-    s.push(8);
-    s.push(15);
-
-    std::cout << s.pop() << std::endl;
-    std::cout << s.pop() << std::endl;
-    std::cout << s.pop() << std::endl;
+    ArrayStack as;
+    as.push(16);
+    as.push(23);
+    as.push(42);
+    std::cout << "ArrayStack:" << std::endl;
+    drainAndPrint(&as);
+    std::cout << std::endl;
 
     return 0;
 }
