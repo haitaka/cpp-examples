@@ -7,7 +7,5 @@ public:
     virtual int pop() = 0;
     virtual int peek() const = 0;
     virtual bool isEmpty() const = 0;
-
-    void drainAndPrint();
 };
 
