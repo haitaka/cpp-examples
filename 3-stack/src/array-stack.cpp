@@ -7,7 +7,7 @@ ArrayStack::ArrayStack() : ArrayStack(defaultCapacity) {}
 ArrayStack::ArrayStack(int capacity)
     : capacity(capacity)
     , data(new int[capacity])
-    , top(0) {}
+    , count(0) {}
 
 ArrayStack::ArrayStack(const ArrayStack & orig) : data(nullptr) {
     initFrom(orig);
@@ -33,7 +33,7 @@ ArrayStack & ArrayStack::operator=(ArrayStack const & that) {
 void ArrayStack::initFrom(ArrayStack const & that) {
     assert(data == nullptr);
 
-    top = that.top;
+    count = that.count;
     capacity = that.capacity;
     data = new int[capacity];
     for (int i = 0; i < capacity; ++i) {
@@ -42,9 +42,9 @@ void ArrayStack::initFrom(ArrayStack const & that) {
 }
 
 void ArrayStack::grow() {
-    int newCapacity = capacity * growthFactor;
+    int newCapacity = capacity * 2;
     int * newData = new int[newCapacity];
-    for (int i = 0; i < top; ++i) {
+    for (int i = 0; i < count; ++i) {
         newData[i] = data[i];
     }
     delete[] data;
@@ -53,24 +53,24 @@ void ArrayStack::grow() {
 }
 
 bool ArrayStack::isEmpty() const {
-    return top == 0;
+    return count == 0;
 }
 
 void ArrayStack::push(int val) {
-    if (top == capacity) {
+    if (count == capacity) {
         grow();
     }
-    data[top++] = val;
+    data[count++] = val;
 }
 
 int ArrayStack::pop() {
     int topValue = peek();
-    top -= 1;
+    count -= 1;
     return topValue;
 }
 
 int ArrayStack::peek() const {
     assert(!isEmpty());
-    return data[top - 1];
+    return data[count - 1];
 }
 

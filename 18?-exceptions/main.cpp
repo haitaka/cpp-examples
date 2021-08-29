@@ -18,6 +18,8 @@ int myDiv(int x, int y) {
 
 struct T {
     int * p;
+    const * int x;
+    * int a const;
     T(int x) : p(new int[42]) {
         p[0] = x;
     }
@@ -59,8 +61,9 @@ void bar(int * arr, int size) {
 
 int main() {
     try {
-        int z = foo(1, 0);
-        std::cout << z << std::endl;
+        S s;
+//        int z = foo(1, 0);
+//        std::cout << z << std::endl;
     } catch (std::exception & e) {
         std::cerr << e.what() << std::endl;
         throw;

@@ -24,8 +24,8 @@ private:
     void free();
     void grow();
 
+    int count;
     int capacity;
-    int top;
     int * data;
 };
 
